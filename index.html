@@ -1015,6 +1015,70 @@
         ],
       };
 
+      // Phonetic spellings so the computer says tricky words correctly.
+      const PRONUNCIATION_OVERRIDES = {
+        laugh: "laff",
+        business: "bizniss",
+        separate: "sep er ate",
+        rhythm: "rith um",
+        embarrass: "im barr ass",
+        guarantee: "gair un tee",
+        yacht: "yot",
+        colleague: "kol leeg",
+        cemetery: "sem eh terry",
+        occurrence: "uh kurrence",
+        fluorescent: "flor essent",
+        mischievous: "miss chuh vuss",
+        questionnaire: "kwess chuh nair",
+        camouflage: "cam uh flahj",
+        silhouette: "sill oo et",
+        bureaucracy: "byoo rah kruh see",
+        mnemonic: "nih mon ik",
+        chrysanthemum: "kris an thuh mum",
+        sacrilegious: "sac ruh lee jus",
+        supersede: "soo per seed",
+        camaraderie: "kah ruh mahd er ee",
+        ephemeral: "ih fem er ul",
+        conscientious: "kon shee en shus",
+        exhilarating: "ig zill er ay ting",
+        dichotomy: "dy kot oh mee",
+        bourgeois: "boorzh wah",
+        schadenfreude: "shah den froy duh",
+        sycophant: "sick oh fant",
+        zeitgeist: "zite guyst",
+        perspicacious: "per spih kay shus",
+        quintessential: "kwin tuh sen shul",
+        circumlocution: "ser kum low kyoo shun",
+        inchoate: "in koh ate",
+        accommodate: "uh kom uh date",
+        autochthonous: "aw tok thuh nus",
+        chauvinism: "shoh vuh niz um",
+        ecclesiastical: "ih klee zee as tik ul",
+        eleemosynary: "el ih moss ih ner ee",
+        proselytize: "pros uh luh tize",
+        vicissitude: "vih siss ih tood",
+        logomachy: "loh gom uh kee",
+        appoggiatura: "uh poj uh too ruh",
+        guetapens: "get uh pahn",
+        abstemious: "ab stee mee us",
+        borborygmus: "bor bor ig mus",
+        cynosure: "sine oh zhur",
+        dysthymia: "dis thime ee uh",
+        euonym: "yoo uh nim",
+        foudroyant: "foo drwah yahn",
+        marocain: "mar uh kane",
+        nunatak: "noo nuh tack",
+        pulchritude: "pul kri tood",
+        ursprache: "oor shprah kuh",
+        anachronism: "uh nak ruh niz um",
+        dystopia: "dis toh pee uh",
+      };
+
+      function getSpeakText(wordEntry) {
+        if (wordEntry.say) return wordEntry.say;
+        return PRONUNCIATION_OVERRIDES[wordEntry.word.toLowerCase()] || wordEntry.word;
+      }
+
       const GRADES = [
         { id: "PK", label: "Pre-K" },
         { id: "K", label: "K" },
@@ -1458,15 +1522,16 @@
         utterance.volume = 1;
       }
 
-      function speakWord(text, { spellingBee = false } = {}) {
+      function speakWord(text, { spellingBee = false, slow = false } = {}) {
         window.speechSynthesis.cancel();
+        const wordRate = slow ? 0.78 : 0.9;
 
         if (spellingBee) {
           const intro = new SpeechSynthesisUtterance("The word is");
           configureUtterance(intro, { rate: 0.96, pitch: 1.02 });
 
-          const word = new SpeechSynthesisUtterance(text + ".");
-          configureUtterance(word, { rate: 0.9, pitch: 1 });
+          const word = new SpeechSynthesisUtterance(text);
+          configureUtterance(word, { rate: wordRate, pitch: 1 });
 
           intro.onend = () => window.speechSynthesis.speak(word);
           window.speechSynthesis.speak(intro);
@@ -1530,9 +1595,7 @@
           (letterCount === 1 ? "" : "s") +
           ' and starts with "' +
           firstLetter +
-          '". In a sentence: "' +
-          wordEntry.sentence +
-          '"'
+          '".'
         );
       }
 
@@ -1690,7 +1753,10 @@
       mainMenuBtn.addEventListener("click", quitGame);
       quitBtn.addEventListener("click", quitGame);
       hearBtn.addEventListener("click", () => {
-        if (currentWord) speakWord(currentWord.word, { spellingBee: true });
+        if (!currentWord) return;
+        const speakText = getSpeakText(currentWord);
+        const slow = speakText.length > 12 || currentWord.word.length > 10;
+        speakWord(speakText, { spellingBee: true, slow });
       });
       hintBtn.addEventListener("click", buyHint);
       checkBtn.addEventListener("click", checkSpelling);
