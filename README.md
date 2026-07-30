@@ -1,6 +1,6 @@
-# Spelling Bee Practice
+# SpellBee
 
-A free spelling bee practice website for grades Pre-K through 12th. Pick your grade, hear the word, spell it, and earn points to buy hints.
+A free spelling practice website for grades Pre-K through 12th. Pick your grade, hear the word, spell it, and earn points to buy hints.
 
 ## How to use
 

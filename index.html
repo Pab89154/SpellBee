@@ -3,9 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Spelling Bee Practice — pick your grade and practice spelling words!" />
+    <meta
+      name="description"
+      content="SpellBee — pick your grade and practice spelling words!"
+    />
+    <meta name="theme-color" content="#f59e0b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SpellBee" />
+    <link rel="icon" type="image/png" sizes="256x256" href="favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-    <title>Spelling Bee Practice</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <script>
+      (function () {
+        try {
+          var key = "spellbee-night-mode";
+          var saved = localStorage.getItem(key);
+          var dark =
+            saved === "true" ||
+            (saved !== "false" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) {
+            document.documentElement.classList.add("night-mode");
+            document.documentElement.style.colorScheme = "dark";
+          } else {
+            document.documentElement.style.colorScheme = "light";
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <title>SpellBee — Spelling Practice for Kids</title>
     <style>
       *,
       *::before,
@@ -27,6 +54,95 @@
         --text: #292524;
         --text-muted: #78716c;
         --radius: 16px;
+        color-scheme: light;
+      }
+
+      html.night-mode {
+        --bg: #1c1917;
+        --surface: #292524;
+        --honey: #fbbf24;
+        --honey-dark: #f59e0b;
+        --bee-black: #0c0a09;
+        --bee-yellow: #d97706;
+        --green: #4ade80;
+        --red: #f87171;
+        --text: #fafaf9;
+        --text-muted: #a8a29e;
+        color-scheme: dark;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        html:not(.night-mode):not(.day-mode) {
+          --bg: #1c1917;
+          --surface: #292524;
+          --honey: #fbbf24;
+          --honey-dark: #f59e0b;
+          --bee-black: #0c0a09;
+          --bee-yellow: #d97706;
+          --green: #4ade80;
+          --red: #f87171;
+          --text: #fafaf9;
+          --text-muted: #a8a29e;
+          color-scheme: dark;
+        }
+      }
+
+      .header {
+        position: relative;
+        width: 100%;
+        max-width: 560px;
+      }
+
+      .night-mode-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        background: rgba(0, 0, 0, 0.35);
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .night-mode-btn:hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      html.night-mode .card {
+        background: var(--surface);
+        color: var(--text);
+        border-color: rgba(251, 191, 36, 0.35);
+      }
+
+      html.night-mode .grade-btn {
+        background: #44403c;
+        color: var(--text);
+      }
+
+      html.night-mode .grade-btn:hover {
+        background: #57534e;
+      }
+
+      html.night-mode .grade-btn.active {
+        background: var(--bee-yellow);
+        color: #1c1917;
+      }
+
+      html.night-mode .menu-btn {
+        background: #44403c;
+        color: var(--text);
+      }
+
+      html.night-mode .spell-input,
+      html.night-mode input,
+      html.night-mode textarea {
+        background: #1c1917;
+        color: var(--text);
+        border-color: rgba(168, 162, 158, 0.4);
       }
 
       body {
@@ -57,10 +173,28 @@
         margin-bottom: 1.75rem;
       }
 
-      .bee-icon {
-        font-size: 3rem;
-        line-height: 1;
+      .header-brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.85rem;
+        text-align: left;
+      }
+
+      .brand-logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        object-fit: cover;
+        flex-shrink: 0;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+        background: #ffffff;
         animation: float 3s ease-in-out infinite;
+      }
+
+      html.night-mode .brand-logo {
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+        background: #292524;
       }
 
       @keyframes float {
@@ -77,13 +211,13 @@
         font-size: clamp(1.75rem, 5vw, 2.5rem);
         font-weight: 800;
         color: #ffffff;
-        margin-top: 0.25rem;
+        margin-top: 0;
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
       }
 
       .tagline {
         color: #ffffff;
-        margin-top: 0.35rem;
+        margin-top: 0.15rem;
         font-size: 1.05rem;
         text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
       }
@@ -692,9 +826,31 @@
   <body>
     <div class="app">
       <header class="header">
-        <div class="bee-icon" aria-hidden="true">🐝</div>
-        <h1>Spelling Bee Practice</h1>
-        <p class="tagline">Pick your grade, hear the word, spell it!</p>
+        <button
+          type="button"
+          class="night-mode-btn"
+          id="night-mode-btn"
+          title="Night mode"
+          aria-label="Toggle night mode"
+          aria-pressed="false"
+        >
+          🌙 Night
+        </button>
+        <div class="header-brand">
+          <img
+            class="brand-logo"
+            src="logo.png"
+            alt="SpellBee logo"
+            width="64"
+            height="64"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <div>
+            <h1>SpellBee</h1>
+            <p class="tagline">Pick your grade, hear the word, spell it!</p>
+          </div>
+        </div>
       </header>
 
       <main class="main">
@@ -773,7 +929,7 @@
           <div class="form-card">
             <h2 class="form-title">Send Feedback</h2>
             <p class="form-intro">
-              Tell us what you think about Spelling Bee Practice! Your ideas help make the site better.
+              Tell us what you think about SpellBee! Your ideas help make the site better.
             </p>
             <form id="feedback-form" class="form-grid" novalidate>
               <div class="form-field">
@@ -1116,9 +1272,9 @@
 
       const WORDS_PER_ROUND = 10;
       const HINT_COST = 5;
-      const STORAGE_FEEDBACK = "spellingBee_feedback";
+      const STORAGE_FEEDBACK = "spellBee_feedback";
       const FEEDBACK_EMAIL = "pmolinasamayoa@icloud.com";
-      const REVIEW_PIN = "spellingbee";
+      const REVIEW_PIN = "spellbee";
 
       let selectedGrade = "3";
       let currentWord = null;
@@ -1285,7 +1441,7 @@
       function sendFeedbackEmail(data) {
         const sender = data.name ? `${data.name} wrote:` : "A visitor wrote:";
         const body = `${sender}\n\n${data.message}`;
-        const subject = "Spelling Bee Practice feedback";
+        const subject = "SpellBee feedback";
         const mailtoUrl = `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.location.href = mailtoUrl;
       }
@@ -1748,6 +1904,69 @@
         sentenceHint.classList.remove("hidden");
         updateNextButtonLabel();
       }
+
+
+      const nightModeBtn = document.getElementById("night-mode-btn");
+      const NIGHT_MODE_KEY = "spellbee-night-mode";
+
+      function systemPrefersDark() {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches;
+      }
+
+      function isNightModeOn() {
+        return document.documentElement.classList.contains("night-mode");
+      }
+
+      function applyNightMode(enabled, persist) {
+        document.documentElement.classList.toggle("night-mode", enabled);
+        document.documentElement.classList.toggle("day-mode", !enabled);
+        document.documentElement.style.colorScheme = enabled ? "dark" : "light";
+        if (nightModeBtn) {
+          nightModeBtn.setAttribute("aria-pressed", enabled ? "true" : "false");
+          nightModeBtn.title = enabled ? "Day mode" : "Night mode";
+          nightModeBtn.setAttribute(
+            "aria-label",
+            enabled ? "Switch to day mode" : "Switch to night mode"
+          );
+          nightModeBtn.textContent = enabled ? "☀️ Day" : "🌙 Night";
+        }
+        if (persist) {
+          try {
+            localStorage.setItem(NIGHT_MODE_KEY, enabled ? "true" : "false");
+          } catch (e) {}
+        }
+      }
+
+      function resolveNightMode() {
+        try {
+          const saved = localStorage.getItem(NIGHT_MODE_KEY);
+          if (saved === "true") return true;
+          if (saved === "false") return false;
+        } catch (e) {}
+        return systemPrefersDark();
+      }
+
+      applyNightMode(resolveNightMode(), false);
+
+      if (nightModeBtn) {
+        nightModeBtn.addEventListener("click", () => {
+          applyNightMode(!isNightModeOn(), true);
+        });
+      }
+
+      try {
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", () => {
+            try {
+              if (localStorage.getItem(NIGHT_MODE_KEY) == null) {
+                applyNightMode(systemPrefersDark(), false);
+              }
+            } catch (e) {
+              applyNightMode(systemPrefersDark(), false);
+            }
+          });
+      } catch (e) {}
 
       startBtn.addEventListener("click", startGame);
       playAgainBtn.addEventListener("click", startGame);
