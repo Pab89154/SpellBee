@@ -999,178 +999,10 @@
       </footer>
     </div>
 
+    <script src="words.js"></script>
     <script>
-      // Words get harder as the grade goes up!
-      const WORDS_BY_GRADE = {
-        PK: [
-          { word: "go", sentence: "Let's go to the park." },
-          { word: "me", sentence: "Can you help me?" },
-          { word: "we", sentence: "We play together." },
-          { word: "up", sentence: "Look up at the sky." },
-          { word: "in", sentence: "The toy is in the box." },
-          { word: "at", sentence: "I am at home." },
-          { word: "bus", sentence: "We ride the bus to school." },
-          { word: "hat", sentence: "I wear a red hat." },
-          { word: "egg", sentence: "I had an egg for breakfast." },
-          { word: "pet", sentence: "My pet is very cute." },
-        ],
-        K: [
-          { word: "cat", sentence: "The cat sat on the mat." },
-          { word: "dog", sentence: "My dog likes to run." },
-          { word: "sun", sentence: "The sun is bright today." },
-          { word: "run", sentence: "I can run very fast." },
-          { word: "big", sentence: "That is a big tree." },
-          { word: "red", sentence: "She has a red ball." },
-          { word: "hop", sentence: "Bunnies hop in the grass." },
-          { word: "sit", sentence: "Please sit in your chair." },
-          { word: "cup", sentence: "I drink milk from a cup." },
-          { word: "bed", sentence: "I go to bed at eight." },
-        ],
-        1: [
-          { word: "book", sentence: "I read a book every night." },
-          { word: "tree", sentence: "Birds live in the tree." },
-          { word: "fish", sentence: "We saw a fish in the pond." },
-          { word: "moon", sentence: "The moon shines at night." },
-          { word: "star", sentence: "I saw a bright star." },
-          { word: "play", sentence: "Let's play outside." },
-          { word: "stop", sentence: "Stop at the red light." },
-          { word: "help", sentence: "Can you help me, please?" },
-          { word: "hand", sentence: "Raise your hand to answer." },
-          { word: "jump", sentence: "We jump on the trampoline." },
-        ],
-        2: [
-          { word: "friend", sentence: "My best friend lives next door." },
-          { word: "school", sentence: "I walk to school every day." },
-          { word: "happy", sentence: "She felt happy on her birthday." },
-          { word: "water", sentence: "Plants need water to grow." },
-          { word: "light", sentence: "Turn on the light, please." },
-          { word: "green", sentence: "Grass is green in spring." },
-          { word: "write", sentence: "I write in my journal." },
-          { word: "laugh", sentence: "The joke made us laugh." },
-          { word: "round", sentence: "The ball is round." },
-          { word: "think", sentence: "I think before I answer." },
-        ],
-        3: [
-          { word: "about", sentence: "Tell me about your day." },
-          { word: "great", sentence: "You did a great job." },
-          { word: "every", sentence: "I brush my teeth every day." },
-          { word: "found", sentence: "I found my lost pencil." },
-          { word: "night", sentence: "The stars come out at night." },
-          { word: "small", sentence: "The mouse is very small." },
-          { word: "carry", sentence: "Please carry your own bag." },
-          { word: "again", sentence: "Let's read that book again." },
-          { word: "animal", sentence: "A lion is a big animal." },
-          { word: "before", sentence: "Wash your hands before lunch." },
-        ],
-        4: [
-          { word: "answer", sentence: "She knew the right answer." },
-          { word: "enough", sentence: "Do we have enough time?" },
-          { word: "people", sentence: "Many people came to the fair." },
-          { word: "special", sentence: "Today is a special day." },
-          { word: "favorite", sentence: "Blue is my favorite color." },
-          { word: "remember", sentence: "I remember my first day of school." },
-          { word: "surprise", sentence: "The party was a big surprise." },
-          { word: "believe", sentence: "I believe in myself." },
-          { word: "pretty", sentence: "The garden looks pretty in spring." },
-          { word: "because", sentence: "We stayed inside because it rained." },
-        ],
-        5: [
-          { word: "different", sentence: "Every snowflake looks different." },
-          { word: "important", sentence: "Sleep is important for your brain." },
-          { word: "question", sentence: "He raised his hand to ask a question." },
-          { word: "probably", sentence: "It will probably rain tomorrow." },
-          { word: "business", sentence: "They started a small business." },
-          { word: "decision", sentence: "It was a hard decision to make." },
-          { word: "language", sentence: "She speaks two languages." },
-          { word: "calendar", sentence: "Mark the date on your calendar." },
-          { word: "beautiful", sentence: "The sunset was beautiful." },
-          { word: "separate", sentence: "Please separate the recycling." },
-        ],
-        6: [
-          { word: "definitely", sentence: "I will definitely be there." },
-          { word: "environment", sentence: "We should protect the environment." },
-          { word: "necessary", sentence: "Sleep is necessary for good health." },
-          { word: "rhythm", sentence: "The drummer kept a steady rhythm." },
-          { word: "recommend", sentence: "I recommend this book." },
-          { word: "temperature", sentence: "The temperature dropped overnight." },
-          { word: "achievement", sentence: "Graduating was a big achievement." },
-          { word: "embarrass", sentence: "Don't embarrass your friend." },
-          { word: "guarantee", sentence: "They guarantee the product works." },
-          { word: "privilege", sentence: "Education is a privilege." },
-        ],
-        7: [
-          { word: "address", sentence: "What is your home address?" },
-          { word: "experience", sentence: "Camp was a fun experience." },
-          { word: "conscious", sentence: "Be conscious of how you treat others." },
-          { word: "maintenance", sentence: "The car needs regular maintenance." },
-          { word: "occasionally", sentence: "We occasionally eat at that restaurant." },
-          { word: "absence", sentence: "Her absence was noticed right away." },
-          { word: "colleague", sentence: "She asked a colleague for help." },
-          { word: "exaggerate", sentence: "Try not to exaggerate the story." },
-          { word: "parallel", sentence: "Draw two parallel lines." },
-          { word: "yacht", sentence: "They sailed on a small yacht." },
-        ],
-        8: [
-          { word: "cemetery", sentence: "They visited the old cemetery." },
-          { word: "occurrence", sentence: "Snow is a rare occurrence here." },
-          { word: "fluorescent", sentence: "The fluorescent lights buzzed softly." },
-          { word: "mischievous", sentence: "The mischievous puppy chewed a shoe." },
-          { word: "questionnaire", sentence: "Please fill out the questionnaire." },
-          { word: "abundant", sentence: "Wildflowers were abundant in the meadow." },
-          { word: "camouflage", sentence: "The frog uses camouflage to hide." },
-          { word: "deteriorate", sentence: "Old paper can deteriorate over time." },
-          { word: "silhouette", sentence: "We saw the silhouette of the mountains." },
-          { word: "parliament", sentence: "The parliament debated the new law." },
-        ],
-        9: [
-          { word: "conscientious", sentence: "She is a conscientious student." },
-          { word: "exhilarating", sentence: "The roller coaster was exhilarating." },
-          { word: "mnemonic", sentence: "ROY G. BIV is a mnemonic for colors." },
-          { word: "supersede", sentence: "New rules supersede the old ones." },
-          { word: "camaraderie", sentence: "The team shared real camaraderie." },
-          { word: "ephemeral", sentence: "Cherry blossoms are ephemeral." },
-          { word: "dichotomy", sentence: "There is a dichotomy between theory and practice." },
-          { word: "chrysanthemum", sentence: "She planted a chrysanthemum in the garden." },
-          { word: "sacrilegious", sentence: "Vandalizing the statue was sacrilegious." },
-          { word: "bureaucracy", sentence: "Paperwork can feel like bureaucracy." },
-        ],
-        10: [
-          { word: "anachronism", sentence: "A typewriter in a sci-fi film is an anachronism." },
-          { word: "bourgeois", sentence: "The novel satirizes bourgeois values." },
-          { word: "dystopia", sentence: "The novel describes a grim dystopia." },
-          { word: "sycophant", sentence: "A sycophant flatters to gain favor." },
-          { word: "zeitgeist", sentence: "The film captured the zeitgeist of the era." },
-          { word: "perspicacious", sentence: "The perspicacious detective solved the case." },
-          { word: "quintessential", sentence: "She is the quintessential team player." },
-          { word: "circumlocution", sentence: "Avoid circumlocution and be direct." },
-          { word: "schadenfreude", sentence: "He felt a twinge of schadenfreude." },
-          { word: "inchoate", sentence: "The plan was still inchoate." },
-        ],
-        11: [
-          { word: "accommodate", sentence: "The hotel can accommodate our family." },
-          { word: "autochthonous", sentence: "The tribe is autochthonous to the region." },
-          { word: "chauvinism", sentence: "We reject chauvinism in all forms." },
-          { word: "ecclesiastical", sentence: "The building has ecclesiastical architecture." },
-          { word: "eleemosynary", sentence: "The eleemosynary fund helped families." },
-          { word: "proselytize", sentence: "They did not proselytize their beliefs." },
-          { word: "vicissitude", sentence: "Life has its vicissitudes." },
-          { word: "logomachy", sentence: "The debate turned into logomachy." },
-          { word: "appoggiatura", sentence: "The singer added an appoggiatura to the note." },
-          { word: "guetapens", sentence: "Guetapens means an ambush or trap." },
-        ],
-        12: [
-          { word: "abstemious", sentence: "He was abstemious at the feast." },
-          { word: "borborygmus", sentence: "A borborygmus is a rumbling stomach sound." },
-          { word: "cynosure", sentence: "She became the cynosure of the gala." },
-          { word: "dysthymia", sentence: "Dysthymia is a long-lasting low mood." },
-          { word: "euonym", sentence: "A euonym is a well-suited name." },
-          { word: "foudroyant", sentence: "The foudroyant storm struck without warning." },
-          { word: "marocain", sentence: "Marocain is a type of dress fabric." },
-          { word: "nunatak", sentence: "A nunatak is a peak above an ice sheet." },
-          { word: "pulchritude", sentence: "Poets once praised her pulchritude." },
-          { word: "ursprache", sentence: "Ursprache means a hypothetical original language." },
-        ],
-      };
+      // WORDS_BY_GRADE comes from words.js (100 words per grade).
+
 
       // Phonetic spellings so the computer says tricky words correctly.
       const PRONUNCIATION_OVERRIDES = {
@@ -1278,7 +1110,8 @@
 
       let selectedGrade = "3";
       let currentWord = null;
-      let usedWords = [];
+      let usedWords = []; // words used in the current round
+      let seenWords = []; // words already practiced for this grade (persisted)
       let correct = 0;
       let wrong = 0;
       let wordNumber = 0;
@@ -1708,12 +1541,45 @@
         speakWord("Round complete. You got " + correct + " out of " + WORDS_PER_ROUND + " correct.");
       }
 
+      const SEEN_WORDS_KEY = "spellBee_seenWords";
+
+      function loadSeenWords(grade) {
+        try {
+          const raw = localStorage.getItem(SEEN_WORDS_KEY);
+          if (!raw) return [];
+          const data = JSON.parse(raw);
+          return Array.isArray(data[grade]) ? data[grade] : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveSeenWords(grade, words) {
+        try {
+          const raw = localStorage.getItem(SEEN_WORDS_KEY);
+          const data = raw ? JSON.parse(raw) : {};
+          data[grade] = words;
+          localStorage.setItem(SEEN_WORDS_KEY, JSON.stringify(data));
+        } catch (e) {}
+      }
+
       function pickRandomWord() {
         const list = WORDS_BY_GRADE[selectedGrade];
-        const available = list.filter((item) => !usedWords.includes(item.word));
+        // Prefer words not seen across rounds; never repeat within this round.
+        let available = list.filter(
+          (item) => !usedWords.includes(item.word) && !seenWords.includes(item.word)
+        );
+
+        if (available.length === 0) {
+          seenWords = [];
+          saveSeenWords(selectedGrade, []);
+          available = list.filter((item) => !usedWords.includes(item.word));
+        }
 
         const choice = available[Math.floor(Math.random() * available.length)];
         usedWords.push(choice.word);
+        seenWords.push(choice.word);
+        saveSeenWords(selectedGrade, seenWords);
         return choice;
       }
 
@@ -1854,6 +1720,12 @@
         wrong = 0;
         wordNumber = 1;
         usedWords = [];
+        seenWords = loadSeenWords(selectedGrade);
+        // After all 100 words have been practiced, start the pool over.
+        if (seenWords.length >= WORDS_BY_GRADE[selectedGrade].length) {
+          seenWords = [];
+          saveSeenWords(selectedGrade, []);
+        }
         correctCount.textContent = "0";
         wrongCount.textContent = "0";
         gradeBadge.textContent = gradeLabels[selectedGrade];
