@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: spellbee
+    runtime: static
+    plan: free
+    buildCommand: echo "Static site — no build step"
+    staticPublishPath: .
